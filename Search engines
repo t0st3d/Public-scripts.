@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multi-Search Engine Query</title>
+</head>
+<body>
+    <h2>Search All Engines</h2>
+    <input type="text" id="query" placeholder="Enter your search term" style="width: 300px;" />
+    <button onclick="searchAll()">Search All</button>
+
+    <script>
+        function searchAll() {
+            const q = encodeURIComponent(document.getElementById("query").value.trim());
+            if (!q) return;
+
+            const searchEngines = [
+                `https://www.google.com/search?q=${q}`,
+                `https://www.bing.com/search?q=${q}`,
+                `https://search.yahoo.com/search?p=${q}`,
+                `https://duckduckgo.com/?q=${q}`,
+                `https://www.ecosia.org/search?q=${q}`,
+                `https://search.brave.com/search?q=${q}`,
+                `https://www.startpage.com/sp/search?query=${q}`,
+                `https://www.mojeek.com/search?q=${q}`,
+                `https://www.qwant.com/?q=${q}`,
+                `https://swisscows.com/en/web?query=${q}`,
+                `https://you.com/search?q=${q}`,
+                `https://www.baidu.com/s?wd=${q}`,
+                `https://yandex.com/search/?text=${q}`,
+                `https://search.naver.com/search.naver?query=${q}`,
+                `https://www.seznam.cz/search?q=${q}`,
+                `https://www.sogou.com/web?query=${q}`,
+                `https://www.goo.ne.jp/search.html?keyword=${q}`,
+                `https://www.daum.net/search?q=${q}`,
+                `https://web.de/`,
+                `https://www.rambler.ru/`,
+                `https://www.exalead.com/search/`,
+                `https://www.biglobe.ne.jp/`,
+                `https://www.onet.pl/`,
+                `https://www.dogpile.com/serp?q=${q}`,
+                `https://metager.org/search?q=${q}`,
+                `https://www.gibiru.com/`,
+                `https://infinitysearch.co/`,
+                `https://peekier.com/`
+            ];
+
+            searchEngines.forEach(url => window.open(url, '_blank'));
+        }
+    </script>
+</body>
+</html>
