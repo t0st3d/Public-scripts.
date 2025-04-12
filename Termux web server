@@ -1,0 +1,60 @@
+import subprocess
+import sys
+import os
+import time
+
+# Check if the script is being run on Termux
+if not os.path.exists("/data/data/com.termux/files/usr/bin"):
+    print("This script is meant to be run in Termux.")
+    sys.exit(1)
+
+# Function to install packages in Termux
+def install_package(package):
+    print(f"Installing {package}...")
+    subprocess.run(["pkg", "install", package, "-y"])
+
+# Install required packages
+def install_requirements():
+    print("Updating Termux package repositories...")
+    subprocess.run(["pkg", "update", "-y"])
+    
+    required_packages = ["python", "python3", "git", "nano", "wget", "curl", "openssl"]
+    for package in required_packages:
+        install_package(package)
+
+    print("Required packages installed!")
+
+# Create a basic HTTP server script
+def create_server_script():
+    server_code = '''import http.server
+import socketserver
+
+PORT = 8000
+
+Handler = http.server.SimpleHTTPRequestHandler
+
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    print("serving at port", PORT)
+    httpd.serve_forever()
+    '''
+
+    script_file = "/data/data/com.termux/files/home/web_server.py"
+    with open(script_file, "w") as file:
+        file.write(server_code)
+
+    print(f"Web server script created at {script_file}")
+
+# Start the web server
+def start_web_server():
+    print("Starting web server...")
+    subprocess.Popen(["python3", "/data/data/com.termux/files/home/web_server.py"])
+
+# Main function to run the setup
+def setup_web_server():
+    install_requirements()
+    create_server_script()
+    start_web_server()
+    print("Web server setup complete! You can access it at http://localhost:8000")
+
+if __name__ == "__main__":
+    setup_web_server()
